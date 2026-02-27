@@ -29,7 +29,7 @@ export default function NewsDetail() {
         
         setError(null);
       } catch (err) {
-        setError('Макаланы жүктөөдө ката кетти');
+        setError('При загрузке статья произошла ошибка');
         console.error(err);
       } finally {
         setIsLoading(false);
@@ -108,7 +108,7 @@ export default function NewsDetail() {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-500 text-xl mb-4">{error || 'Макала табылган жок'}</p>
+          <p className="text-red-500 text-xl mb-4">{error || 'Статья не найдена!'}</p>
           <Link 
             to="/"
             className="px-6 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition-colors inline-block"
@@ -155,7 +155,7 @@ export default function NewsDetail() {
                   </button>
                   <button onClick={() => handleShare('copy')} className="flex items-center space-x-2 w-full p-2 hover:bg-gray-800 rounded transition-colors">
                     <LinkIcon size={18} className="text-gray-400" />
-                    <span>Шилтеме көчүрүү</span>
+                    <span>Копировать ссылку</span>
                   </button>
                 </div>
               )}
@@ -176,13 +176,13 @@ export default function NewsDetail() {
             </div>
             <div className="flex items-center">
               <Eye size={16} className="mr-2" />
-              <span>{news.views} көрүү</span>
+              <span>{news.views} посмотреть</span>
             </div>
             <span 
               className="px-2 py-1 text-white text-xs font-bold rounded"
               style={{ backgroundColor: news.category?.color || '#DC2626' }}
             >
-              {news.category?.name || 'ЖАҢЫЛЫК'}
+              {news.category?.name || 'НОВОСТЬ'}
             </span>
           </div>
         </div>
@@ -211,14 +211,14 @@ export default function NewsDetail() {
                   className="w-full h-auto object-cover"
                 />
                 <p className="text-xs text-gray-500 py-2 text-center border-t border-gray-800">
-                  Иллюстрациялык сүрөт
+                  изображение
                 </p>
               </div>
             )}
 
             {/* Виджет "Поделиться" */}
             <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-800">
-              <h3 className="text-sm font-bold mb-3 text-gray-400">Бөлүшүү</h3>
+              <h3 className="text-sm font-bold mb-3 text-gray-400">Поделиться</h3>
               <div className="flex space-x-2">
                 <button onClick={() => handleShare('facebook')} className="flex-1 p-2 bg-gray-800 hover:bg-gray-700 rounded transition-colors">
                   <Facebook size={16} className="mx-auto text-blue-500" />
@@ -238,7 +238,7 @@ export default function NewsDetail() {
             {/* Похожие новости - ТЕПЕРЬ ЗДЕСЬ! */}
             {relatedNews.length > 0 && (
               <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-800">
-                <h3 className="text-lg font-bold mb-4 text-white">Окшош жаңылыктар</h3>
+                <h3 className="text-lg font-bold mb-4 text-white">Похожие новости</h3>
                 <div className="space-y-4">
                   {relatedNews.map((item) => (
                     <Link 
@@ -280,10 +280,10 @@ export default function NewsDetail() {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="hover:text-white transition-colors"
           >
-            ↑ Башына чыгуу
+            ↑ Вернуться на верх
           </button>
           <Link to="/" className="hover:text-white transition-colors">
-            Башкы бетке →
+            На главную страницу →
           </Link>
         </div>
       </div>

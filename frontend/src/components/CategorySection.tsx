@@ -78,13 +78,13 @@ export default function CategorySection({
         <div className="lg:col-span-2">
           <div className="border-b border-gray-800 mb-6">
             <h2 className="text-2xl font-bold text-white mb-4">
-              Акыркы жаңылыктар
+              Последние новости
             </h2>
           </div>
 
           {newsByCategory.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-400">Жаңылыктар жок</p>
+              <p className="text-gray-400">Новостей нету</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -102,7 +102,7 @@ export default function CategorySection({
                       className="absolute top-3 left-3 text-white text-xs font-bold px-2 py-1 rounded"
                       style={{ backgroundColor: news.category?.color || '#DC2626' }}
                     >
-                      {news.category?.name || 'ЖАҢЫЛЫК'}
+                      {news.category?.name || 'НОВОСТИ'}
                     </span>
                   </div>
                   <h3 className="text-lg font-bold text-white mb-2 group-hover:text-gray-300 transition-colors line-clamp-2">
@@ -123,7 +123,7 @@ export default function CategorySection({
           <div className="bg-gray-900 p-6 rounded-lg border border-gray-800 sticky top-28">
             <div className="flex items-center mb-6">
               <TrendingUp className="text-red-500 mr-2" size={24} />
-              <h2 className="text-xl font-bold text-white">Трендде</h2>
+              <h2 className="text-xl font-bold text-white">В тренде</h2>
             </div>
 
             <div className="space-y-4">
@@ -145,15 +145,15 @@ export default function CategorySection({
             {/* Newsletter */}
             <div className="mt-6 pt-6 border-t border-gray-800">
               <h3 className="text-lg font-bold text-white mb-4">
-                Кабарларга жазылуу
+                Подписаться на новостей
               </h3>
               <p className="text-gray-400 text-sm mb-4">
-                Күндөлүк жаңылыктарды алуу үчүн почтаңызды жазыңыз.
+                Чтобы получать новых новостей пишите электронную почту.
               </p>
               <form onSubmit={(e) => e.preventDefault()} className="space-y-3">
                 <input
                   type="email"
-                  placeholder="Email дарегиңиз"
+                  placeholder="Email почта"
                   className="w-full px-4 py-2 bg-black border border-gray-700 text-white rounded-lg focus:outline-none focus:border-red-600 transition-colors"
                   required
                 />
@@ -161,7 +161,7 @@ export default function CategorySection({
                   type="submit"
                   className="w-full bg-red-600 text-white font-bold py-2 rounded-lg hover:bg-red-700 transition-colors"
                 >
-                  Жазылуу
+                  Подписаться
                 </button>
               </form>
             </div>

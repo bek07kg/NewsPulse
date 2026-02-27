@@ -10,7 +10,7 @@ export default function Header({ categories }: HeaderProps) {
   // Если категории из API пустые, показываем стандартные
   const displayCategories = categories.length > 0 
     ? categories.map(cat => cat.name)
-    : ['Башкы бет', 'Дүйнөлүк', 'Саясат', 'Бизнес', 'Технология', 'Илим', 'Медицина', 'Кызыктуу', 'Спорт'];
+    : ['Главная', 'Мировой', 'Политика', 'Бизнес', 'Технология', 'Наука', 'Медицина', 'Интересные', 'Спорт'];
 
   return (
     <>

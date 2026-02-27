@@ -41,8 +41,8 @@ export default function Hero({ mainNews, importantNews = [], isLoading = false }
     return (
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center text-gray-400 py-20">
-          <p className="text-xl">Жаңылыктар жок</p>
-          <p className="text-sm mt-2">Кийинчерээк кириңиз</p>
+          <p className="text-xl">Новостей нету</p>
+          <p className="text-sm mt-2">Попробуйте позже</p>
         </div>
       </section>
     );
