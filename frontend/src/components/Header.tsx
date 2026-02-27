@@ -1,8 +1,16 @@
 import { Menu, Search, User } from 'lucide-react';
 import Marquee from 'react-fast-marquee';
+import { Category } from '../services/api';
 
-export default function Header() {
-  const categories = ['Башкы бет', 'Дүйнөлүк', 'Саясат', 'Бизнес', 'Технология', 'Илим', 'Медицина', 'Кызыктуу'];
+interface HeaderProps {
+  categories: Category[];
+}
+
+export default function Header({ categories }: HeaderProps) {
+  // Если категории из API пустые, показываем стандартные
+  const displayCategories = categories.length > 0 
+    ? categories.map(cat => cat.name)
+    : ['Башкы бет', 'Дүйнөлүк', 'Саясат', 'Бизнес', 'Технология', 'Илим', 'Медицина', 'Кызыктуу', 'Спорт'];
 
   return (
     <>
@@ -17,7 +25,7 @@ export default function Header() {
             </div>
 
             <nav className="hidden lg:flex space-x-6">
-              {categories.map((category) => (
+              {displayCategories.map((category) => (
                 <a
                   key={category}
                   href="#"
@@ -40,24 +48,19 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Бегущая строка — тоньше и логотипы крупнее */}
+      {/* Бегущая строка */}
       <div className="bg-red-600 h-[20px] flex items-center">
         <Marquee speed={50} gradient={false}>
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
-          <img src="/images/newslogonew.png" alt="NewsPulse" className="h-16 mx-12" />
+          {[...Array(12)].map((_, i) => (
+            <img 
+              key={i}
+              src="/images/newslogonew.png" 
+              alt="NewsPulse" 
+              className="h-16 mx-12" 
+            />
+          ))}
         </Marquee>
       </div>
     </>
   );
 }
-

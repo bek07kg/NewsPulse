@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+/* Для всех элементов по умолчанию */
+* {
+  box-sizing: border-box;
+}

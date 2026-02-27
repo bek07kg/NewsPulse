@@ -1,105 +1,170 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Clock, TrendingUp } from 'lucide-react';
+import { Category, NewsItem } from '../services/api';
 
-export default function CategorySection() {
-  const worldNews = [
-    {
-      image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "WORLD",
-      title: "International Peace Talks Show Progress in Conflict Resolution",
-      time: "3 hours ago"
-    },
-    {
-      image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "POLITICS",
-      title: "New Legislation Aims to Reform Healthcare System",
-      time: "5 hours ago"
-    },
-    {
-      image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "SCIENCE",
-      title: "Breakthrough Discovery in Renewable Energy Storage",
-      time: "7 hours ago"
-    },
-    {
-      image: "https://images.pexels.com/photos/2422290/pexels-photo-2422290.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "HEALTH",
-      title: "New Study Reveals Benefits of Mediterranean Diet",
-      time: "8 hours ago"
+interface CategorySectionProps {
+  categories: Category[];
+  newsByCategory: NewsItem[];
+  isLoading: boolean;
+}
+
+export default function CategorySection({ 
+//   categories, 
+  newsByCategory, 
+  isLoading 
+}: CategorySectionProps) {
+  
+  const [trendingNews, setTrendingNews] = useState<string[]>([]);
+
+  // Форматирование даты
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    
+    if (diffHours < 1) return 'Только что';
+    if (diffHours < 24) return `${diffHours} часа назад`;
+    return date.toLocaleDateString('ru-RU');
+  };
+
+  // Генерируем trending из последних новостей
+  useEffect(() => {
+    if (newsByCategory.length > 0) {
+      const trending = newsByCategory.slice(0, 5).map(news => news.title);
+      setTrendingNews(trending);
+    } else {
+      setTrendingNews([
+        "Космос агенттиги Марска миссия жарыялады",
+        "Электр унааларынын сатылышы дүйнө жүзүндө өстү",
+        "Технологиялык гигант жаңы инновацияны тааныштырды",
+        "Тарыхый климаттык келишимге кол коюлду",
+        "Чемпионаттын жеңүүчүсү тарых жаратты"
+      ]);
     }
-  ];
+  }, [newsByCategory]);
 
-  const trendingNews = [
-    "Space Agency Announces Mars Mission Timeline",
-    "Electric Vehicle Sales Surge Globally",
-    "Major Tech Company Unveils New Innovation",
-    "Historic Climate Agreement Signed",
-    "Championship Winner Makes History"
-  ];
+  // Состояние загрузки
+  if (isLoading) {
+    return (
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="animate-pulse">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <div className="h-8 bg-gray-800 w-48 mb-6 rounded"></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="space-y-3">
+                    <div className="bg-gray-800 h-48 rounded-lg"></div>
+                    <div className="bg-gray-800 h-6 w-full rounded"></div>
+                    <div className="bg-gray-800 h-4 w-24 rounded"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="lg:col-span-1">
+              <div className="bg-gray-800/50 h-96 rounded-lg"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Левая колонка с новостями */}
         <div className="lg:col-span-2">
           <div className="border-b border-gray-800 mb-6">
-            <h2 className="text-2xl font-bold text-white mb-4">Latest Stories</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Акыркы жаңылыктар
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {worldNews.map((news, index) => (
-              <article key={index} className="group cursor-pointer">
-                <div className="relative h-48 overflow-hidden mb-3">
-                  <img
-                    src={news.image}
-                    alt={news.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <span className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1">
-                    {news.category}
-                  </span>
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-gray-300 transition-colors">
-                  {news.title}
-                </h3>
-                <div className="flex items-center text-gray-400 text-sm">
-                  <Clock size={14} className="mr-2" />
-                  <span>{news.time}</span>
-                </div>
-              </article>
-            ))}
-          </div>
+          {newsByCategory.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-400">Жаңылыктар жок</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {newsByCategory.slice(0, 4).map((news) => (
+                <Link to={`/news/${news.id}`} key={news.id} className="group cursor-pointer">
+                  <div className="relative h-48 overflow-hidden rounded-lg mb-3">
+                    <img
+                      src={news.image_url || news.image || 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600'}
+                      alt={news.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span 
+                      className="absolute top-3 left-3 text-white text-xs font-bold px-2 py-1 rounded"
+                      style={{ backgroundColor: news.category?.color || '#DC2626' }}
+                    >
+                      {news.category?.name || 'ЖАҢЫЛЫК'}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-gray-300 transition-colors line-clamp-2">
+                    {news.title}
+                  </h3>
+                  <div className="flex items-center text-gray-400 text-sm">
+                    <Clock size={14} className="mr-2 flex-shrink-0" />
+                    <span>{formatDate(news.created_at)}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
 
+        {/* Правая колонка */}
         <div className="lg:col-span-1">
-          <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
+          <div className="bg-gray-900 p-6 rounded-lg border border-gray-800 sticky top-28">
             <div className="flex items-center mb-6">
               <TrendingUp className="text-red-500 mr-2" size={24} />
-              <h2 className="text-xl font-bold text-white">Trending Now</h2>
+              <h2 className="text-xl font-bold text-white">Трендде</h2>
             </div>
 
             <div className="space-y-4">
               {trendingNews.map((news, index) => (
-                <div key={index} className="flex items-start space-x-3 pb-4 border-b border-gray-800 last:border-b-0 cursor-pointer hover:opacity-70 transition-opacity">
-                  <span className="text-red-500 font-bold text-lg">{index + 1}</span>
-                  <p className="text-white text-sm font-medium leading-tight">{news}</p>
+                <div 
+                  key={index} 
+                  className="flex items-start space-x-3 pb-4 border-b border-gray-800 last:border-b-0 cursor-pointer hover:opacity-70 transition-opacity group"
+                >
+                  <span className="text-red-500 font-bold text-lg min-w-[24px]">
+                    {index + 1}
+                  </span>
+                  <p className="text-white text-sm font-medium leading-tight group-hover:text-gray-300 transition-colors">
+                    {news}
+                  </p>
                 </div>
               ))}
             </div>
-          </div>
 
-          <div className="mt-6 bg-gray-900 p-6 rounded-lg border border-gray-800">
-            <h3 className="text-lg font-bold text-white mb-4">Newsletter</h3>
-            <p className="text-gray-400 text-sm mb-4">
-              Get the latest news delivered to your inbox daily.
-            </p>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full px-4 py-2 bg-black border border-gray-700 text-white rounded mb-3 focus:outline-none focus:border-red-600"
-            />
-            <button className="w-full bg-red-600 text-white font-bold py-2 rounded hover:bg-red-700 transition-colors">
-              Subscribe
-            </button>
+            {/* Newsletter */}
+            <div className="mt-6 pt-6 border-t border-gray-800">
+              <h3 className="text-lg font-bold text-white mb-4">
+                Кабарларга жазылуу
+              </h3>
+              <p className="text-gray-400 text-sm mb-4">
+                Күндөлүк жаңылыктарды алуу үчүн почтаңызды жазыңыз.
+              </p>
+              <form onSubmit={(e) => e.preventDefault()} className="space-y-3">
+                <input
+                  type="email"
+                  placeholder="Email дарегиңиз"
+                  className="w-full px-4 py-2 bg-black border border-gray-700 text-white rounded-lg focus:outline-none focus:border-red-600 transition-colors"
+                  required
+                />
+                <button 
+                  type="submit"
+                  className="w-full bg-red-600 text-white font-bold py-2 rounded-lg hover:bg-red-700 transition-colors"
+                >
+                  Жазылуу
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
