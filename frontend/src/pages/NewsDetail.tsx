@@ -69,7 +69,7 @@ export default function NewsDetail() {
         break;
       case 'copy':
         navigator.clipboard.writeText(shareUrl);
-        alert('Шилтеме көчүрүлдү!');
+        alert('Ссылка скопировано!');
         return;
     }
     if (url) window.open(url, '_blank');
@@ -113,7 +113,7 @@ export default function NewsDetail() {
             to="/"
             className="px-6 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition-colors inline-block"
           >
-            Башкы бетке кайтуу
+            Вернуться на главную страницу
           </Link>
         </div>
       </div>
@@ -128,7 +128,7 @@ export default function NewsDetail() {
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center text-gray-400 hover:text-white transition-colors">
               <ArrowLeft size={20} className="mr-2" />
-              Башкы бет
+              Главная страница
             </Link>
             <div className="flex items-center space-x-2 relative">
               <button
@@ -176,7 +176,7 @@ export default function NewsDetail() {
             </div>
             <div className="flex items-center">
               <Eye size={16} className="mr-2" />
-              <span>{news.views} посмотреть</span>
+              <span>{news.views} просмотров</span>
             </div>
             <span 
               className="px-2 py-1 text-white text-xs font-bold rounded"
