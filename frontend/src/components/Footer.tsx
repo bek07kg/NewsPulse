@@ -2,9 +2,9 @@ import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 
 export default function Footer() {
   const footerLinks = {
-    News: ['Home', 'World', 'Politics', 'Business', 'Technology', 'Science'],
-    Company: ['About Us', 'Contact', 'Careers', 'Press', 'Advertise'],
-    Support: ['Help Center', 'Terms of Service', 'Privacy Policy', 'Cookie Policy']
+    Новости: ['Главная', 'Мир', 'Политика', 'Бизнес', 'Технологии', 'Наука'],
+    Компания: ['О нас', 'Контакты', 'Вакансии', 'Пресса', 'Реклама'],
+    Поддержка: ['Справка', 'Условия использования', 'Политика конфиденциальности', 'Cookie-файлы']
   };
 
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
           <div>
             <h3 className="text-2xl font-bold text-white mb-4">NewsPulse</h3>
             <p className="text-gray-400 text-sm mb-4">
-              Your trusted source for breaking news, analysis, and in-depth reporting from around the world.
+              Ваш надежный источник оперативных новостей, анализа и подробных репортажей со всего мира.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -50,14 +50,14 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm mb-4 md:mb-0">
-            © 2026 NewsPulse. All rights reserved.
+            © 2026 NewsPulse. Все права защищены.
           </p>
           <div className="flex space-x-6">
             <a href="#" className="text-gray-400 text-sm hover:text-white transition-colors">
-              Terms
+              Условия
             </a>
             <a href="#" className="text-gray-400 text-sm hover:text-white transition-colors">
-              Privacy
+              Конфиденциальность
             </a>
             <a href="#" className="text-gray-400 text-sm hover:text-white transition-colors">
               Cookies

@@ -1,16 +1,15 @@
 import { Menu, Search, User } from 'lucide-react';
 import Marquee from 'react-fast-marquee';
 import { Category } from '../services/api';
+import { Link, NavLink } from 'react-router-dom';
 
 interface HeaderProps {
   categories: Category[];
 }
 
 export default function Header({ categories }: HeaderProps) {
-  // Если категории из API пустые, показываем стандартные
-  const displayCategories = categories.length > 0 
-    ? categories.map(cat => cat.name)
-    : ['Главная', 'Мировой', 'Политика', 'Бизнес', 'Технология', 'Наука', 'Медицина', 'Интересные', 'Спорт'];
+  const activeClass = "text-sm font-medium text-orange-500 transition-colors";
+  const inactiveClass = "text-sm font-medium text-white hover:text-gray-300 transition-colors";
 
   return (
     <>
@@ -21,18 +20,27 @@ export default function Header({ categories }: HeaderProps) {
               <button className="lg:hidden text-white hover:text-gray-300">
                 <Menu size={24} />
               </button>
-              <img src="/images/newslogonew.png" alt="NewsPulse" className="h-36 w-auto" />
+              <Link to="/">
+                <img src="/images/newslogonew.png" alt="NewsPulse" className="h-36 w-auto" />
+              </Link>
             </div>
 
             <nav className="hidden lg:flex space-x-6">
-              {displayCategories.map((category) => (
-                <a
-                  key={category}
-                  href="#"
-                  className="text-sm font-medium text-white hover:text-gray-300 transition-colors"
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) => isActive ? activeClass : inactiveClass}
+              >
+                Главная
+              </NavLink>
+              {categories.map((category) => (
+                <NavLink
+                  key={category.id}
+                  to={`/category/${category.slug}`}
+                  className={({ isActive }) => isActive ? activeClass : inactiveClass}
                 >
-                  {category}
-                </a>
+                  {category.name}
+                </NavLink>
               ))}
             </nav>
 

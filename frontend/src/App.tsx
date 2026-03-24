@@ -3,35 +3,36 @@ import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import CategorySection from './components/CategorySection';
-import VideoSection from './components/VideoSection';
+// import VideoSection from './components/VideoSection';
 import Footer from './components/Footer';
 import NewsDetail from './pages/NewsDetail';
+import CategoryPage from './pages/CategoryPage';
 import { newsApi, categoryApi, HomepageData, Category } from './services/api';
 
 // Главная страница
-function HomePage({ 
-  homepageData, 
-  categories, 
-  isLoading 
-}: { 
-  homepageData: HomepageData | null; 
+function HomePage({
+  homepageData,
+  categories,
+  isLoading
+}: {
+  homepageData: HomepageData | null;
   categories: Category[];
   isLoading: boolean;
 }) {
   return (
     <>
       <Header categories={categories} />
-      <Hero 
+      <Hero
         mainNews={homepageData?.main}
         importantNews={homepageData?.important}
         isLoading={isLoading}
       />
-      <CategorySection 
+      <CategorySection
         categories={categories}
         newsByCategory={homepageData?.latest || []}
         isLoading={isLoading}
       />
-      <VideoSection />
+      {/* <VideoSection /> */}
       <Footer />
     </>
   );
@@ -51,7 +52,7 @@ function App() {
           newsApi.getHomepage(),
           categoryApi.getAll()
         ]);
-        
+
         setHomepageData(homepage);
         setCategories(cats);
         setError(null);
@@ -71,8 +72,8 @@ function App() {
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-500 text-xl mb-4">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="px-6 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
           >
             Попробовать снова
@@ -87,12 +88,13 @@ function App() {
       <div className="min-h-screen bg-black text-white"> {/* ← ВАЖНО: bg-black здесь */}
         <Routes>
           <Route path="/" element={
-            <HomePage 
+            <HomePage
               homepageData={homepageData}
               categories={categories}
               isLoading={isLoading}
             />
           } />
+          <Route path="/category/:slug" element={<CategoryPage />} />
           <Route path="/news/:id" element={<NewsDetail />} />
         </Routes>
       </div>

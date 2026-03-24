@@ -45,8 +45,8 @@ export const newsApi = {
   },
 
   getByCategory: async (categorySlug: string) => {
-    const response = await axios.get<NewsItem[]>(`${API_URL}/news/?category__slug=${categorySlug}`);
-    return response.data;
+    const response = await axios.get<NewsItem[]>(`${API_URL}/news/`);
+    return response.data.filter(item => item.category?.slug === categorySlug);
   }
 };
 
